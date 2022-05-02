@@ -2,8 +2,8 @@
 ls /root &>/dev/null
 [ "${?}" != "0" ] && echo 'Please use "sudo bash" run' && exit 1
 
-grep 'Alpine.*Linux' /etc/os-release &>/dev/null
-[ "${?}" != "0" ] && read -p 'Ops, Not Alpine Linux, Press any key to continue.' && exit 1
+#grep 'Alpine.*Linux' /etc/os-release &>/dev/null
+#[ "${?}" != "0" ] && read -p 'Ops, Not Alpine Linux, Press any key to continue.' && exit 1
 
 ping -c 1 8.8.8.8 &>/dev/null &&
   tee /etc/resolv.conf <<EOF
@@ -11,22 +11,21 @@ nameserver 168.95.1.1
 nameserver 8.8.8.8
 EOF
 
-sed -i '/#.*v.*community/s/#//; s/ //g' /etc/apk/repositories
-apk update
-apk add --no-cache \
-  sudo bash \
-  openssh-client sshpass \
-  jq nano tree wget curl acl \
-  p7zip e2fsprogs \
-  grep gettext \
-  inotify-tools netcat-openbsd \
-  util-linux coreutils findutils binutils iputils
+#sed -i '/#.*v.*community/s/#//; s/ //g' /etc/apk/repositories
+#yum update
+#  sudo bash \
+#  openssh-client sshpass \
+#  jq nano tree wget curl acl \
+#  p7zip e2fsprogs \
+#  grep gettext \
+#  inotify-tools netcat-openbsd \
+#  util-linux coreutils findutils binutils iputils
 
 # $CMWHERE == null is vm or is docker
-CMWHERE=$(grep -w 'docker\|libpod\|buildah' /proc/1/cgroup)
-if [ "${CMWHERE}" == "" ]; then
-  apk update
-  apk add --no-cache open-vm-tools
-  rc-update add open-vm-tools
-  rc-service open-vm-tools start
-fi
+#CMWHERE=$(grep -w 'docker\|libpod\|buildah' /proc/1/cgroup)
+#if [ "${CMWHERE}" == "" ]; then
+#  apk update
+#  apk add --no-cache open-vm-tools
+#  rc-update add open-vm-tools
+#  rc-service open-vm-tools start
+#fi
